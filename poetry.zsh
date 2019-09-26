@@ -14,7 +14,7 @@ _zp_check_poetry_venv() {
   fi
   if [[ -f pyproject.toml ]] \
       && [[ "${PWD}" != "${_zp_current_project}" ]]; then
-    venv="$(command poetry debug:info 2>/dev/null | grep -oP '.*Path:\s+\K.*')"
+    venv="$(command poetry debug:info 2>/dev/null | sed -n "s/\ *\* Path:\ *\(.*\)/\1/p")"
     if [[ -d "$venv" ]] && [[ "$venv" != "$VIRTUAL_ENV" ]]; then
       source "$venv"/bin/activate || return $?
       _zp_current_project="${PWD}"
