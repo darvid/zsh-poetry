@@ -14,7 +14,7 @@ _zp_check_poetry_venv() {
   fi
   if [[ -f pyproject.toml ]] \
       && [[ "${PWD}" != "${_zp_current_project}" ]]; then
-    venv="$(command poetry debug 2>/dev/null | sed -n "s/Path:\ *\(.*\)/\1/p")"
+    venv="$(command poetry env list --full-path | sed "s/ .*//" | head -1)"
     if [[ -d "$venv" ]] && [[ "$venv" != "$VIRTUAL_ENV" ]]; then
       source "$venv"/bin/activate || return $?
       _zp_current_project="${PWD}"
@@ -35,18 +35,5 @@ add-zsh-hook chpwd _zp_check_poetry_venv
 poetry-shell() {
   _zp_check_poetry_venv
 }
-
-if [[ -n $ZSH_POETRY_OVERRIDE_SHELL ]]; then
-  poetry() {
-    if [[ $1 == "shell" ]]; then
-      _zp_check_poetry_venv || (
-        echo 'pyproject.toml file not found' >&2;
-        exit 1
-      )
-      return $?
-    fi
-    command poetry "$@"
-  }
-fi
 
 [[ -n $ZSH_POETRY_AUTO_ACTIVATE ]] && _zp_check_poetry_venv
