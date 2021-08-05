@@ -18,6 +18,21 @@ Download and `source poetry.zsh`.
 ### zplug
 `zplug "darvid/zsh-poetry"`
 
+### Oh My Zsh
+
+```zsh
+git clone https://github.com/darvid/zsh-poetry $ZSH_CUSTOM/plugins/zsh-poetry
+```
+
+In your `~/.zshrc` add zsh-poetry to your plugins.
+
+```zsh
+plugins=(
+  ...
+  zsh-poetry
+  ...
+)
+```
 
 ## Configuration
 
