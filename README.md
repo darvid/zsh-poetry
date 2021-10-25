@@ -9,14 +9,24 @@ changing to a project directory with a valid ``pyproject.toml``.
 [pyenv]: https://github.com/pyenv/pyenv
 
 
+
 ## Install
-Download and `source poetry.zsh`.
+```
+curl -L git.io/Jinm5 > poetry.zsh
+source poetry.zsh
+```
+
 
 ### Antigen
-`antigen bundle darvid/zsh-poetry`
+```
+antigen bundle darvid/zsh-poetry
+```
+
 
 ### zplug
-`zplug "darvid/zsh-poetry"`
+```
+zplug "darvid/zsh-poetry"
+```
 
 
 ## Configuration
