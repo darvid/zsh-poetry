@@ -21,8 +21,8 @@ _zp_check_poetry_venv() {
   fi
   _proj_dir=$(find-in-parents pyproject.toml)
   if [[ -n ${_proj_dir}  ]] \
-      && ([[ -z ${_zp_current_project} \
-        || [[ "${PWD}" != "${_zp_current_project}" ]]); then
+      && ([[ -z ${_zp_current_project} ]] \
+        || [[ "${PWD}" != "${_zp_current_project}"* ]]); then
     venv="$(command poetry env list --full-path | sed "s/ .*//" | head -1)"
     if [[ -d "$venv" ]] && [[ "$venv" != "$VIRTUAL_ENV" ]]; then
       source "$venv"/bin/activate || return $?
