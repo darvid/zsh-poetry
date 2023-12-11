@@ -1,7 +1,6 @@
 #!/usr/bin/env zsh
 ZSH_POETRY_AUTO_ACTIVATE=${ZSH_POETRY_AUTO_ACTIVATE:-1}
 ZSH_POETRY_AUTO_DEACTIVATE=${ZSH_POETRY_AUTO_DEACTIVATE:-1}
-ZSH_POETRY_OVERRIDE_SHELL=${ZSH_POETRY_OVERRIDE_SHELL:-1}
 
 autoload -U add-zsh-hook
 
@@ -14,7 +13,11 @@ _zp_check_poetry_venv() {
   fi
   if [[ -f pyproject.toml ]] \
       && [[ "${PWD}" != "${_zp_current_project}" ]]; then
-    venv="$(command poetry env list --full-path | sed "s/ .*//" | head -1)"
+    if [[ -n $_zp_current_project ]]; then
+      deactivate
+    fi
+    venv="$(command poetry env list --full-path | grep Activated | sed "s/ .*//" \
+        | head -1)"
     if [[ -d "$venv" ]] && [[ "$venv" != "$VIRTUAL_ENV" ]]; then
       source "$venv"/bin/activate || return $?
       _zp_current_project="${PWD}"
