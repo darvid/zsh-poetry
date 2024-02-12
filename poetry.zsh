@@ -16,6 +16,12 @@ _zp_check_poetry_venv() {
     if [[ -n $_zp_current_project ]]; then
       deactivate
     fi
+
+    # if pyproject doesn't use poetry fail silently
+    if [[ "$(poetry env list &> /dev/null; echo $?)" != "0" ]]; then
+        return 1
+    fi
+
     venv="$(command poetry env list --full-path | grep Activated | sed "s/ .*//" \
         | head -1)"
     if [[ -d "$venv" ]] && [[ "$venv" != "$VIRTUAL_ENV" ]]; then
